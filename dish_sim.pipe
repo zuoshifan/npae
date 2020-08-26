@@ -1,0 +1,81 @@
+# -*- mode: python; -*-
+
+# input file for pipeline manager
+# execute this pipeline by either command of the following two:
+# tlpipe dir/to/cyl.pipe
+# mpiexec -n N tlpipe dir/to/cyl.pipe
+
+
+pipe_tasks = []
+pipe_outdir = './output_sim_750MHz/'
+pipe_logging = 'notset'
+# pipe_logging = 'info'
+pipe_timing = True
+pipe_flush = True
+
+
+# # import glob
+# # data_dir = ''
+# files = '/public/home/wufq/tlvis/disk13/2srcNP_20181212190006_20181212193620.hdf5'
+
+
+
+# from tlpipe.timestream import dispatch
+# pipe_tasks.append(dispatch.Dispatch)
+# ### parameters for Dispatch
+# dp_input_files = files
+# dp_freq_select = (256, 257)
+# dp_exclude_bad = False
+# dp_iterable = False
+# dp_iter_num = 1
+# dp_tag_input_iter = False
+# dp_out = 'dp'
+
+# from tlpipe.timestream import detect_ns
+# pipe_tasks.append(detect_ns.Detect)
+# ### parameters for Detect
+# dt_in = dp_out
+# # dt_feed = 1
+# dt_iterable = False
+# dt_mask_near = 0
+# # dt_mask_near = 1
+# dt_out = 'dt'
+
+# from tlpipe.timestream import rt2ts
+# pipe_tasks.append(rt2ts.Rt2ts)
+# ### parameters for Rt2ts
+# r2t_in = dt_out
+# r2t_iterable = False
+# r2t_output_files = 'data/r2t/file.hdf5'
+# r2t_out = 'r2t'
+
+
+r2t_output_files = 'data/r2t/file.hdf5'
+
+from tlpipe.timestream import map_making_sim_dish
+pipe_tasks.append(map_making_sim_dish.MapMaking)
+### parameters for MapMaking
+# mm_input = r2t_out
+# mm_input_files = 'ts'
+mm_input_files = r2t_output_files
+mm_mask_daytime = False
+mm_use_existed_beam = False
+mm_simulate = True
+# mm_input_maps = ['./750MHz/sim_total_512_750MHz.hdf5']
+# mm_input_maps = ['./750MHz/sim_galaxy_512_750MHz_unpol.hdf5', './750MHz/sim_pointsource_512_750MHz_unpol_maxflux_1e5.hdf5']
+mm_input_maps = ['./750MHz_maps/sim_pointsource_512_750MHz.hdf5']
+# mm_prior_map = './750MHz/sim_total_512_750MHz.hdf5'
+# mm_auto_correlations = False
+mm_auto_correlations = True
+mm_pol = 'I'
+mm_interp = 'none'
+mm_noise_weight = False
+mm_dirty_map = False
+# mm_dirty_map = True
+mm_method = 'tk'
+mm_epsilon = 0.01
+# mm_epsilon = 0.1
+# mm_epsilon = 1.0
+mm_correct_order = 0
+mm_out = 'mm'
+
